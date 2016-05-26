@@ -29,19 +29,13 @@ print
 x = tf.placeholder("float", [None, 4])
 y_ = tf.placeholder("float", [None, 3])
 
-#Creamos una nueva capa:
-#Se crean los pesos y bias de la capa
 W1 = tf.Variable(np.float32(np.random.rand(4, 5))*0.1)
 b1 = tf.Variable(np.float32(np.random.rand(5))*0.1)
 
-#La funcion de activacion, en este caso la sigmoide, calcula la informacion de salida de una neurona.
 y1 = tf.sigmoid(tf.matmul(x, W1) + b1)
 
 W2 = tf.Variable(np.float32(np.random.rand(5, 3))*0.1)
 b2 = tf.Variable(np.float32(np.random.rand(3))*0.1)
-
-#El metodo softmax viene a ser una version suavizada o continua del metodo en el que el
-#ganador se transforma a 1 y las demas a 0.
 
 y = tf.nn.softmax(tf.matmul(y1, W2) + b2)
 
@@ -62,7 +56,6 @@ print "----------------------"
 
 batch_size = 20
 
-#Vector de errores
 errores = []
 
 for step in xrange(1000):
@@ -73,7 +66,6 @@ for step in xrange(1000):
         sess.run(train, feed_dict={x: batch_xs, y_: batch_ys})
         if step % 50 == 0:
             error = sess.run(cross_entropy, feed_dict={x: batch_xs, y_: batch_ys})
-            #Introducimos los errores al vector
             errores.append(error)
             print "Iteration #:", step, "Error: ", error
             result = sess.run(y, feed_dict={x: batch_xs})
